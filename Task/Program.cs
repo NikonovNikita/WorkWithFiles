@@ -24,7 +24,7 @@
             {
                 Console.WriteLine($"Папка: {di.Name}\tВремя последнего использования: {di.LastAccessTime}");  
                 DirectoryGetInfo(di);
-                var tempTime = DateTime.Now;    
+                var tempTime = DateTime.Now;
                 if(tempTime - di.LastAccessTime >= TimeSpan.FromMinutes(30))
                 {
                     di.Delete();

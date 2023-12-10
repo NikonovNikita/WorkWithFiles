@@ -2,9 +2,23 @@
 {
     static void Main(string[] args)
     {
-        string path = @"\luft"; // Необходимо указать путь к каталогу
+        string path = @"\"; // Необходимо указать путь к каталогу
         DirectoryInfo dirInfo = new(path);
-        Console.WriteLine($"Указанный каталог {dirInfo.Name} имеет размер {GetSize(dirInfo)} байт");
+        if(dirInfo.Exists)
+        {
+            try
+            {
+                Console.WriteLine($"Указанный каталог {dirInfo.Name} имеет размер {GetSize(dirInfo)} байт");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Возникла ошибка во время работы программы: {ex.Message}");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Каталога по указанному пути - {path} - не существует");
+        }
 
         static long GetSize(DirectoryInfo dirInfoParam)
         {
