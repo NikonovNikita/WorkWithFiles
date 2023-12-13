@@ -1,31 +1,33 @@
-﻿class Program
+﻿namespace Task1
 {
-    static void Main(string[] args)
+    public class Program
     {
-        string path = @"\luft"; // Необходимо указать путь
-        DirectoryInfo dirInfo = new DirectoryInfo(path);
-        if (dirInfo.Exists)
+        public static void Main()
         {
-            try
+            string path = @"\luft"; // Необходимо указать путь
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            if (dirInfo.Exists)
             {
-                Console.WriteLine($"Каталог {dirInfo.Name} содержит в себе:");
-                DirectoryGetInfo(dirInfo);
+                try
+                {
+                    Console.WriteLine($"Каталог {dirInfo.Name} содержит в себе:");
+                    DirectoryGetInfo(dirInfo);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Исключение: {ex.Message}");
+                }
             }
-            catch(Exception ex)
-            {
-                Console.WriteLine($"Исключение: {ex.Message}");
-            }
+            else { Console.WriteLine("Не удалось найти указанный каталог :("); }
         }
-        else { Console.WriteLine("Не удалось найти указанный каталог :("); }
-    }
-    static void DirectoryGetInfo(DirectoryInfo dirInfoParam)
-    {
+        static void DirectoryGetInfo(DirectoryInfo dirInfoParam)
+        {
             foreach (var di in dirInfoParam.GetDirectories())
             {
-                Console.WriteLine($"Папка: {di.Name}\tВремя последнего использования: {di.LastAccessTime}");  
+                Console.WriteLine($"Папка: {di.Name}\tВремя последнего использования: {di.LastAccessTime}");
                 DirectoryGetInfo(di);
                 var tempTime = DateTime.Now;
-                if(tempTime - di.LastAccessTime >= TimeSpan.FromMinutes(30))
+                if (tempTime - di.LastAccessTime >= TimeSpan.FromMinutes(30))
                 {
                     di.Delete();
                     Console.WriteLine($"Папка {di.Name} удалена");
@@ -35,12 +37,12 @@
             {
                 Console.WriteLine($"Файл: {fi.Name}\tВремя последнего использования: {fi.LastAccessTime}");
                 var tempTime = DateTime.Now;
-                if(tempTime - fi.LastAccessTime >= TimeSpan.FromMinutes(30))
+                if (tempTime - fi.LastAccessTime >= TimeSpan.FromMinutes(30))
                 {
                     fi.Delete();
                     Console.WriteLine($"Файл {fi.Name} удален");
                 }
             }
-
+        }
     }
 }

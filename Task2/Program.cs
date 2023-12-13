@@ -1,34 +1,44 @@
-﻿class Program
+﻿namespace Task2
 {
-    static void Main(string[] args)
+    public class Program
     {
-        string path = @"\"; // Необходимо указать путь к каталогу
-        DirectoryInfo dirInfo = new(path);
-        if(dirInfo.Exists)
+        static void Main()
         {
-            try
+            GetInfo();
+        }
+        public static long GetInfo()
+        {
+            string path = @"\luft"; // Необходимо указать путь к каталогу
+            DirectoryInfo dirInfo = new(path);
+            long returnSize;
+            if (dirInfo.Exists)
             {
-                Console.WriteLine($"Указанный каталог {dirInfo.Name} имеет размер {GetSize(dirInfo)} байт");
+                try
+                {
+                    returnSize = GetSize(dirInfo);
+                    Console.WriteLine($"\nУказанный каталог {dirInfo.Name} имеет размер {returnSize} байт");
+                    return returnSize;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Возникла ошибка во время работы программы: {ex.Message}");
+                    return returnSize = 0;
+                }
             }
-            catch(Exception ex)
+            else
             {
-                Console.WriteLine($"Возникла ошибка во время работы программы: {ex.Message}");
+                Console.WriteLine($"Каталога по указанному пути - {path} - не существует");
+                return returnSize = 0;
             }
         }
-        else
-        {
-            Console.WriteLine($"Каталога по указанному пути - {path} - не существует");
-        }
-
         static long GetSize(DirectoryInfo dirInfoParam)
         {
             long size = 0;
-            foreach(var fi in dirInfoParam.GetFiles())
+            foreach (var fi in dirInfoParam.GetFiles())
             {
-                Console.WriteLine($"Файл {fi.Name} имеет размер {fi.Length} байт");
                 size += fi.Length;
             }
-            foreach(var di in dirInfoParam.GetDirectories())
+            foreach (var di in dirInfoParam.GetDirectories())
             {
                 size += GetSize(di);
             }
