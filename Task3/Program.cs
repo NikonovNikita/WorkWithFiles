@@ -24,6 +24,7 @@
             }
             else { Console.WriteLine("Не удалось найти указанный каталог :("); }
         }
+        
         static void DirectoryDeleter(DirectoryInfo dirInfoParam)
         {
             foreach (var di in dirInfoParam.GetDirectories())
@@ -44,6 +45,7 @@
                 }
             }
         }
+        
         public static long GetInfoAboutSize(DirectoryInfo dirInfo)
         {
             long returnSize;
@@ -58,6 +60,7 @@
                 return returnSize = 0;
             }
         }
+        
         static long GetSize(DirectoryInfo dirInfoParam)
         {
             long size = 0;
